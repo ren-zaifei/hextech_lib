@@ -1,0 +1,22 @@
+{
+  "network.hextech_lib.packet.msg": "You choose the:",
+  "gui.hextech_lib.selection.title": "Hextech",
+  "gui.hextech_lib.selection.choose": "Choose",
+  "gui.hextech_lib.error.empty": "This loot pool is empty",
+  "hextech_lib.card.debug.title": "Debug Title",
+  "hextech_lib.card.debug.description": "Debug Description",
+  "command.hextech_lib.error.noplayer": "The command can only be executed by a player!",
+  "gui.hextech_lib.selection.rarity.COMMON": "Common",
+  "gui.hextech_lib.selection.rarity.RARE": "Rare",
+  "gui.hextech_lib.selection.rarity.EPIC": "Epic",
+  "gui.hextech_lib.selection.rarity.LEGENDARY": "Legendary",
+
+  "card.hextech_lib.minor_healing.title": "Minor Healing",
+  "card.hextech_lib.minor_healing.desc": "Instantly heal 2 hearts",
+
+  "card.hextech_lib.light_step.title": "Light Step",
+  "card.hextech_lib.light_step.desc": "Permanently +10% movement speed",
+
+  "card.hextech_lib.farmers_gift.title": "Farmer's Gift",
+  "card.hextech_lib.farmers_gift.desc": "Grants permanent Luck"
+}
