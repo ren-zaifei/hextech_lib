@@ -26,4 +26,30 @@ This mod includes four built-in loot pools, which represent the rarity and power
 
 If you are just a regular player, you can ignore this.
 
-### 1. 导入依赖
+### 1. 导入依赖  import dependencies
+` implementation "io.github.ren-zaifei:hextech_lib:${Version}" `
+
+Vsersion:[https://repo1.maven.org/maven2/io/github/ren-zaifei/hextech_lib/]
+
+### 2. 创建一个海克斯 Create a Hextech
+
+```java 
+HCard card = new HCard(
+    ResourceLocation.fromNamespaceAn("your_namespace","path")，//ID
+    "namespace.card.title",//TitleKey 翻译时的标题键
+    "namespace.card.description",//DescKey 翻译时的内容键
+    HCard.Rarity.COMMON,//Rarity 可选择的品质
+    Item.XXX.getDefaultInstance(),//Icon 可传入一个ItemStack作为图标
+    p -> {}//Event 此处为一个Player，可进行操作
+)
+
+HexCardRegistry.register(card,rarity)//此处的rarity为HCard.Rarity的一个枚举  rarity is an enum of HCard.Rarity
+
+```
+
+### 3. 调用方法  Choose a Hextech
+```java 
+HexTriggers.selection(player,rarity)
+//player -> Serverplayer
+//rarity -> HCard.Rarity
+```

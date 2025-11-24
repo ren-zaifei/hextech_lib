@@ -1,10 +1,12 @@
+
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.116'
+    id 'net.neoforged.moddev' version '2.0.110'
     id 'idea'
     id 'org.jreleaser' version '1.21.0'
 }
+
 
 tasks.named('wrapper', Wrapper).configure {
 
@@ -15,9 +17,11 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-    maven { url 'https://maven.aliyun.com/repository/public/' }
-    mavenLocal()
     mavenCentral()
+}
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 base {
@@ -76,10 +80,6 @@ neoForge {
 }
 
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
@@ -113,41 +113,40 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
-
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = mod_group_id
-            artifactId = mod_name
-            version = mod_version
+            groupId = 'io.github.ren-zaifei'
+            artifactId = 'hextech_lib'
 
             from components.java
 
             pom {
-                name = mod_id
-                description = mod_description
+                name = 'hextech_lib'
+                description = 'This is a support library that provides a Hextech-like system.'
                 url = 'https://github.com/ren-zaifei/hextech_lib'
+                inceptionYear = '2025'
                 licenses {
                     license {
-                        name = mod_license
-                        url = 'https://www.gnu.org/licenses/lgpl-3.0.en.html'
+                        name = 'LGPL v3'
+                        url = 'https://www.gnu.org/licenses/lgpl-3.0.html'
                     }
                 }
                 developers {
                     developer {
                         id = 'renzaifei'
-                        name = 'ren-zaifei'
-                        email = 'chuen6@qq.com'
+                        name = '人哉肥'
                     }
                 }
                 scm {
                     connection = 'scm:git:https://github.com/ren-zaifei/hextech_lib.git'
-                    developerConnection = 'scm:git:https://github.com/ren-zaifei/hextech_lib.git'
-                    url = 'https://github.com/ren-zaifei/hextech_lib'
+                    developerConnection = 'scm:git:ssh://github.com/ren-zaifei/hextech_lib.git'
+                    url = 'http://github.com/ren-zaifei/hextech_lib'
                 }
             }
         }
     }
+
     repositories {
         maven {
             url = layout.buildDirectory.dir('staging-deploy')
@@ -155,32 +154,37 @@ publishing {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
 jreleaser {
-    signing(({
+    signing {
         active = 'ALWAYS'
         armored = true
-        mode = 'FILE'
-        publicKey = System.getenv('GPG_SECRET_KTY_PATH')
-        secretKey = System.getenv('GPG_SECRET_KTY_PATH')
-    } as Closure<Void>))
+    }
     deploy {
         maven {
-
-            mavenCentral(({
+            mavenCentral {
                 sonatype {
                     active = 'ALWAYS'
                     url = 'https://central.sonatype.com/api/v1/publisher'
                     stagingRepository('build/staging-deploy')
                 }
-            } as Closure<Void>))
-
+            }
         }
     }
 }
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+
+tasks.withType(Javadoc).configureEach {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
+}
+
 
 idea {
     module {
@@ -188,3 +192,4 @@ idea {
         downloadJavadoc = true
     }
 }
+

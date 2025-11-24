@@ -8,6 +8,7 @@ import com.renzaifei.hextechlib.network.PacketOpenCardSelection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Items;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class HexTriggers {
                 "hextech_lib.card.debug.title",
                 "hextech_lib.card.debug.description",
                 HCard.Rarity.COMMON,
-                net.minecraft.world.item.Items.BARRIER.getDefaultInstance(),
+                Items.BARRIER.getDefaultInstance(),
                 p -> {}
         );
     }
