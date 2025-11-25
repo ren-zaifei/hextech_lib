@@ -39,7 +39,7 @@ HCard card = new HCard(
     "namespace.card.title",//TitleKey 翻译时的标题键
     "namespace.card.description",//DescKey 翻译时的内容键
     HCard.Rarity.COMMON,//Rarity 可选择的品质
-    Item.XXX.getDefaultInstance(),//Icon 可传入一个ItemStack作为图标
+    Items.XXX.getDefaultInstance(),//Icon 可传入一个ItemStack作为图标
     p -> {}//Event 此处为一个Player，可进行操作
 )
 
