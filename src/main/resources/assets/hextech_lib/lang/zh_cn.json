@@ -1,5 +1,5 @@
 {
-  "network.hextech_lib.packet.msg": "你获得了:",
+  "network.hextech_lib.packet.msg": "你获得了: %s",
   "gui.hextech_lib.selection.title": "海克斯",
   "gui.hextech_lib.selection.choose": "选择",
   "gui.hextech_lib.error.empty": "此奖池为空",
@@ -9,14 +9,5 @@
   "gui.hextech_lib.selection.rarity.COMMON": "普通",
   "gui.hextech_lib.selection.rarity.RARE": "稀有",
   "gui.hextech_lib.selection.rarity.EPIC": "史诗",
-  "gui.hextech_lib.selection.rarity.LEGENDARY": "传奇",
-
-  "card.hextech_lib.minor_healing.title": "微型治疗",
-  "card.hextech_lib.minor_healing.desc": "立即回复 2 颗心",
-
-  "card.hextech_lib.light_step.title": "轻盈步伐",
-  "card.hextech_lib.light_step.desc": "永久提升 10% 移动速度",
-
-  "card.hextech_lib.farmers_gift.title": "农夫的恩赐",
-  "card.hextech_lib.farmers_gift.desc": "获得永久幸运效果"
+  "gui.hextech_lib.selection.rarity.LEGENDARY": "传奇"
 }

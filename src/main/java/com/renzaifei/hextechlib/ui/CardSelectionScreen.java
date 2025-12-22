@@ -1,10 +1,12 @@
 package com.renzaifei.hextechlib.ui;
 
 import com.renzaifei.hextechlib.card.HCard;
-import com.renzaifei.hextechlib.network.PacketChooseCard;
+import com.renzaifei.hextechlib.network.PackChooseCard;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
@@ -172,8 +174,11 @@ public class CardSelectionScreen extends Screen {
             return super.mouseClicked(mouseX, mouseY, button);
         }
         HCard card = cards.get(selectedIndex);
-        PacketDistributor.sendToServer(new PacketChooseCard(card.id()));
+        PacketDistributor.sendToServer(new PackChooseCard(1,card.id(),null));
         this.onClose();
+        this.minecraft.getSoundManager().play(
+                SimpleSoundInstance.forUI(SoundEvents.PLAYER_LEVELUP, 1.0F, 1.2F)
+        );
         return true;
     }
 
