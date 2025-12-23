@@ -52,9 +52,7 @@ public class HextechLib {
         registrar.playToServer(
                 PackChooseCard.TYPE,
                 PackChooseCard.STREAM_CODEC,
-                FMLEnvironment.dist.isClient()
-                        ? (data, context) -> {}
-                        : ServerPacketHandler::handlePacket
+                ServerPacketHandler::handlePacket
         );
     }
 
