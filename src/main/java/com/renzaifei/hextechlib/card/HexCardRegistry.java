@@ -25,6 +25,15 @@ public class HexCardRegistry {
         BY_ID.put(card.id(), card);
     }
 
+    public static void unregisterHCard(HCard card) {
+        boolean removed = BY_ID.remove(card.id(), card);
+        if (!removed) {
+            return;
+        }
+
+        ID_POOLS.get(card.rarity()).remove(card.id());
+    }
+
     public static List<ResourceLocation> getRandomThreeIds(HCard.Rarity rarity) {
         List<ResourceLocation> pool = ID_POOLS.getOrDefault(rarity, List.of());
         if (pool.isEmpty()) {
