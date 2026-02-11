@@ -18,6 +18,21 @@ group = mod_group_id
 
 repositories {
     mavenCentral()
+
+    maven {
+        url "https://maven.latvian.dev/releases"
+        content {
+            includeGroup "dev.latvian.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
+        }
+    }
 }
 java {
     withJavadocJar()
@@ -89,7 +104,8 @@ configurations {
 }
 
 dependencies {
-
+    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+    interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -103,7 +119,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+            kubejs_version         : kubejs_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -175,6 +192,7 @@ jreleaser {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs << "-parameters"
 }
 
 
