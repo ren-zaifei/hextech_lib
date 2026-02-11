@@ -17,7 +17,5 @@ public class HextechLibKubeJSPlugin implements KubeJSPlugin {
     @Override
     public void registerEvents(EventGroupRegistry registry) {
         registry.register(HCardEvents.GROUP);
-
-        LivingEvent.LivingJumpEvent
     }
 }
