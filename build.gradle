@@ -188,11 +188,6 @@ jreleaser {
             }
         }
     }
-    release {
-        github {
-            enabled = true
-        }
-    }
 }
 
 
