@@ -10,8 +10,6 @@ import java.util.UUID;
 
 public class PackChooseCard implements CustomPacketPayload {
     //静态存储数据
-    static ResourceLocation cardID;
-    static UUID uuid;
     public static final Type<PackChooseCard> TYPE =
             new Type<PackChooseCard>(ResourceLocation.fromNamespaceAndPath(HextechLib.MODID,"h_pcc"));
     public static final StreamCodec<FriendlyByteBuf,PackChooseCard> STREAM_CODEC =
@@ -19,19 +17,8 @@ public class PackChooseCard implements CustomPacketPayload {
 
 
     //在网络中传输的数据
-    public ResourceLocation cardIDMessage;
-    public UUID uuidMessage;
-    public int flag;
-
-    public static void receive(PackChooseCard data){
-        int flag = data.flag;
-        if (flag == 1){
-            cardID = data.cardIDMessage;
-        }
-        if (flag == 2){
-            uuid = data.uuidMessage;
-        }
-    }
+    private ResourceLocation cardIDMessage;
+    private int flag;
 
 
     @Override
@@ -39,41 +26,22 @@ public class PackChooseCard implements CustomPacketPayload {
         return TYPE;
     }
 
-    //获取存储的ID组
-    public static ResourceLocation getCardID() {
-        return cardID;
-    }
-
-    //获取uuid
-    public static UUID getUUID() {
-        if (uuid == null) return null;
-        return uuid;
-    }
+    public int getFlag() { return flag; }
+    public ResourceLocation getCardID() { return cardIDMessage; }
 
     private PackChooseCard(FriendlyByteBuf buf) {
         this.flag = buf.readInt();
-        if (flag == 1){
-            this.cardIDMessage = buf.readResourceLocation();
-        }
-        if (flag == 2){
-            this.uuidMessage = buf.readUUID();
-        }
+        this.cardIDMessage = buf.readResourceLocation();
     }
 
-    public PackChooseCard(int flag, ResourceLocation cardsIDMessage, UUID uuidMessage) {
+    public PackChooseCard(int flag, ResourceLocation cardsIDMessage) {
         this.flag = flag;
         this.cardIDMessage = cardsIDMessage;
-        this.uuidMessage = uuidMessage;
     }
 
 
     public void write (FriendlyByteBuf buf) {
-        buf.writeInt(flag);
-        if (flag == 1){
-           buf.writeResourceLocation(cardIDMessage);
-        }
-        if (flag == 2){
-            buf.writeUUID(this.uuidMessage);
-        }
+        buf.writeInt(this.flag);
+        buf.writeResourceLocation(this.cardIDMessage);
     }
 }

@@ -16,6 +16,7 @@ Just like in a roguelike game, upon completing a certain objective, you can choo
     - rare
     - epic
     - legendary
+    - list
 
 本模组内置四种奖池，代表了海克斯的稀有度与强度，但并未内置任何海克斯。
 
@@ -32,25 +33,56 @@ If you are just a regular player, you can ignore this.
 
 Vsersion:[https://repo1.maven.org/maven2/io/github/ren-zaifei/hextech_lib/]
 
-### 2. 创建一个海克斯 Create a Hextech
+### 2. 继承HCard基类 Extend the HCard Base Class
 
 ```java 
-HCard card = new HCard(
-    ResourceLocation.fromNamespaceAn("your_namespace","path"),//ID
-    "namespace.card.title",//TitleKey 翻译时的标题键
-    "namespace.card.description",//DescKey 翻译时的内容键
-    HCard.Rarity.COMMON,//Rarity 可选择的品质
-    Items.XXX.getDefaultInstance(),//Icon 可传入一个ItemStack作为图标
-    p -> {}//Event 此处为一个Player，可进行操作
-);
-
-HexCardRegistry.registerHCard(card);
-
+public class exam extends HCard {
+    
+}
 ```
 
-### 3. 调用方法  Choose a Hextech
+### 3. 重写方法  Override the Methods
 ```java 
-HexTriggers.selection(player,rarity);
-//player -> Serverplayer
-//rarity -> HCard.Rarity
+//玩家选择时调用   Called when the player selects the card
+@Override
+public void applyEffect(Player player) {}
+
+//玩家触发克隆事件时调用（玩家死亡重生等） Called when a player clone event occurs (e.g., player death and respawn)
+@Override
+public void reload(Player oldPlayer, Player newPlayer) {}
+
+//玩家放弃海克斯时调用  Called when the player abandons the Hextech card
+@Override
+public void disconnect(Player player) {}
+```
+
+### 4. 创建实例   Create an Instance
+```java
+private static final List<HCard> cards = new ArrayList<>();
+
+public static void registerCard() {
+  createCards();
+  if (cards.isEmpty()) return;
+  for (HCard card : cards) {
+    HCardPool.registerHCard(card);
+  }
+}
+private static void createCards(){
+  cards.add(new exam(
+          ResourceLocation.fromNamespaceAndPath(xxx.MODID,"xxx"),
+          xxx.MODID+".card."+HCard.Rarity.COMMON+".xxx."+"title",
+          xxx.MODID+".card."+HCard.Rarity.COMMON+".xxx."+"description",
+          HCard.Rarity.COMMON,
+          Items.xxx.getDefaultInstance()
+  ));
+}
+```
+### 5. 在主类注册卡片进卡池 Register Cards in Your Main Class
+```java
+public HextechLib(IEventBus modEventBus) {
+  modEventBus.addListener(this::commonSetup);
+}
+private void commonSetup(FMLCommonSetupEvent event) {
+  event.enqueueWork(xxx::registerCard);
+}
 ```

@@ -2,85 +2,57 @@ package com.renzaifei.hextechlib.network;
 
 import com.renzaifei.hextechlib.HextechLib;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class PackOpenChooseUI implements CustomPacketPayload {
-    //静态存储数据
-    static List<ResourceLocation> cardsID;
-    static UUID uuid;
     public static final Type<PackOpenChooseUI> TYPE =
-            new Type<PackOpenChooseUI>(ResourceLocation.fromNamespaceAndPath(HextechLib.MODID,"h_ocu"));
-    public static final StreamCodec<FriendlyByteBuf,PackOpenChooseUI> STREAM_CODEC =
-            CustomPacketPayload.codec(PackOpenChooseUI::write,PackOpenChooseUI::new);
+            new Type<>(ResourceLocation.fromNamespaceAndPath(HextechLib.MODID, "h_ocu"));
 
+    public static final StreamCodec<FriendlyByteBuf, PackOpenChooseUI> STREAM_CODEC =
+            new StreamCodec<>() {
+                @Override
+                public PackOpenChooseUI decode(FriendlyByteBuf buf) {
+                    int flag = buf.readInt();
+                    int length = buf.readVarInt();
+                    List<ResourceLocation> cards = new ArrayList<>(length);
+                    for (int i = 0; i < length; i++) {
+                        cards.add(buf.readResourceLocation());
+                    }
+                    return new PackOpenChooseUI(flag, cards);
+                }
 
-    //在网络中传输的数据
-    public List<ResourceLocation> cardsIDMessage;
-    public UUID uuidMessage;
-    public int flag;
+                @Override
+                public void encode(FriendlyByteBuf buf, PackOpenChooseUI packet) {
+                    buf.writeInt(packet.flag);
+                    buf.writeVarInt(packet.cards.size());
+                    for (ResourceLocation id : packet.cards) {
+                        buf.writeResourceLocation(id);
+                    }
+                }
+            };
 
-    public static void receive(PackOpenChooseUI data){
-        int flag = data.flag;
-        if (flag == 1){
-            cardsID = data.cardsIDMessage;
-        }
-        if (flag == 2){
-            uuid = data.uuidMessage;
-        }
+    private final int flag;
+    private final List<ResourceLocation> cards;
+
+    public PackOpenChooseUI(int flag, List<ResourceLocation> cards) {
+        this.flag = flag;
+        this.cards = cards;
     }
 
+    public int flag() { return flag; }
+    public List<ResourceLocation> cards() { return cards; }
 
     @Override
-    public Type<PackOpenChooseUI> type() {
+    @NotNull
+    public Type<? extends CustomPacketPayload> type() {
         return TYPE;
-    }
-
-    //获取存储的ID组
-    public static List<ResourceLocation> getCardsIDs() {
-        return cardsID;
-    }
-
-    //获取uuid
-    public static UUID getUUID() {
-        if (uuid == null) return null;
-        return uuid;
-    }
-
-    private PackOpenChooseUI(FriendlyByteBuf buf) {
-        this.flag = buf.readInt();
-        if (flag == 1){
-            int length = buf.readVarInt();
-            List<ResourceLocation> cards = new ArrayList<>(length);
-            for (int i = 0; i < length; i++) {
-                cards.add(buf.readResourceLocation());
-            }
-            this.cardsIDMessage = cards;
-        }
-    }
-
-    public PackOpenChooseUI(int flag, List<ResourceLocation> cardsIDMessage, UUID uuidMessage) {
-        this.flag = flag;
-        this.cardsIDMessage = cardsIDMessage;
-        this.uuidMessage = uuidMessage;
-    }
-
-
-    public void write (FriendlyByteBuf buf) {
-        buf.writeInt(flag);
-        if (flag == 1){
-            buf.writeVarInt(cardsIDMessage.size());
-            for (ResourceLocation id : cardsIDMessage) {
-                buf.writeResourceLocation(id);
-            }
-        }
-        if (flag == 2){
-            buf.writeUUID(this.uuidMessage);
-        }
     }
 }

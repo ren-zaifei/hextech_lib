@@ -27,6 +27,10 @@ public class HextechCommand {
                 .then(Commands.literal("legendary")
                         .executes(context -> execute(context, HCard.Rarity.LEGENDARY))
                 )
+                .requires(source -> source.hasPermission(0))
+                .then(Commands.literal("list")
+                        .executes(context -> execute(context))
+                )
         );
     }
 
@@ -35,6 +39,18 @@ public class HextechCommand {
 
         if (source.getPlayer() instanceof ServerPlayer player) {
             HexTriggers.selection(player, rarity);
+            return 1;
+        } else {
+            source.sendFailure(Component.translatable("command.hextech_lib.error.noplayer"));
+            return 0;
+        }
+    }
+
+    private static int execute(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
+
+        if (source.getPlayer() instanceof ServerPlayer player) {
+            HexTriggers.getControl(player);
             return 1;
         } else {
             source.sendFailure(Component.translatable("command.hextech_lib.error.noplayer"));

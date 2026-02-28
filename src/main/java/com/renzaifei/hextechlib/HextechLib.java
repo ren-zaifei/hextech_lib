@@ -1,11 +1,13 @@
 package com.renzaifei.hextechlib;
 
-import com.renzaifei.hextechlib.card.HexCardRegistry;
+import com.renzaifei.hextechlib.card.HCardAttachment;
+import com.renzaifei.hextechlib.card.HCardPool;
 import com.renzaifei.hextechlib.client.ClientPacketHandler;
 import com.renzaifei.hextechlib.command.HextechCommand;
 import com.renzaifei.hextechlib.network.PackChooseCard;
 import com.renzaifei.hextechlib.network.PackOpenChooseUI;
 import com.renzaifei.hextechlib.network.ServerPacketHandler;
+import com.renzaifei.hextechlib.test.CommonMan;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -24,36 +26,19 @@ public class HextechLib {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public HextechLib(IEventBus modEventBus) {
-        HexCardRegistry.register(modEventBus);
+        HCardPool.register(modEventBus);
+        HCardAttachment.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(this::registerCommands);
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::registerPayloads);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
         LOGGER.info("go go go 出发喽");
+        event.enqueueWork(CommonMan::registerCard);
     }
 
     private void registerCommands(RegisterCommandsEvent event) {
         HextechCommand.register(event.getDispatcher());
-    }
-
-    private void registerPayloads(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(MODID);
-
-        registrar.playToClient(
-                PackOpenChooseUI.TYPE,
-                PackOpenChooseUI.STREAM_CODEC,
-                FMLEnvironment.dist.isClient()
-                        ? ClientPacketHandler::handle
-                        : (data, context) -> {}
-        );
-
-        registrar.playToServer(
-                PackChooseCard.TYPE,
-                PackChooseCard.STREAM_CODEC,
-                ServerPacketHandler::handlePacket
-        );
     }
 
 }

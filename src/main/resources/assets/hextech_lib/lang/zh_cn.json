@@ -1,8 +1,11 @@
 {
   "network.hextech_lib.packet.msg": "你获得了: %s",
+  "network.hextech_lib.packet.msg2": "你放弃了: %s",
   "gui.hextech_lib.selection.title": "海克斯",
+  "gui.hextech_lib.control.title": "海克斯管理面板",
   "gui.hextech_lib.selection.choose": "选择",
-  "gui.hextech_lib.error.empty": "此奖池为空",
+  "gui.hextech_lib.control.choose": "放弃",
+  "gui.hextech_lib.error.empty": "空异常!!!",
   "hextech_lib.card.debug.title": "警告!!!",
   "hextech_lib.card.debug.description": "此奖池为空!!!",
   "command.hextech_lib.error.noplayer": "这条命令只能由玩家执行！",

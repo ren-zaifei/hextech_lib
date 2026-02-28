@@ -5,6 +5,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.110'
     id 'idea'
     id 'org.jreleaser' version '1.21.0'
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 
@@ -25,7 +26,7 @@ java {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = mod_id + '-mc' + minecraft_version
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -116,14 +117,14 @@ neoForge.ideSyncTask generateModMetadata
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.github.ren-zaifei'
-            artifactId = 'hextech_lib'
+            groupId = project.mod_group_id
+            artifactId = project.mod_id
 
             from components.java
 
             pom {
-                name = 'hextech_lib'
-                description = 'This is a support library that provides a Hextech-like system.'
+                name = project.mod_id
+                description = project.mod_description
                 url = 'https://github.com/ren-zaifei/hextech_lib'
                 inceptionYear = '2025'
                 licenses {
@@ -152,6 +153,20 @@ publishing {
             url = layout.buildDirectory.dir('staging-deploy')
         }
     }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = modrinth_id
+    versionNumber = version
+    versionType = "release"
+    uploadFile = jar
+    gameVersions = ["1.21.1"]
+    loaders = ["neoforge"]
+    dependencies {
+
+    }
+    syncBodyFrom = rootProject.file("README.md").text
 }
 
 jreleaser {
@@ -192,4 +207,3 @@ idea {
         downloadJavadoc = true
     }
 }
-

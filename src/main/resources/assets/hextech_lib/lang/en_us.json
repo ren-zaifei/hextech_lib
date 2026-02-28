@@ -1,8 +1,11 @@
 {
   "network.hextech_lib.packet.msg": "You choose the: %s",
+  "network.hextech_lib.packet.msg2": "You give up the: %s",
   "gui.hextech_lib.selection.title": "Hextech",
+  "gui.hextech_lib.control.title": "Hextech control Panel",
   "gui.hextech_lib.selection.choose": "Choose",
-  "gui.hextech_lib.error.empty": "This loot pool is empty",
+  "gui.hextech_lib.control.choose": "Give Up",
+  "gui.hextech_lib.error.empty": "Empty Error!!!",
   "hextech_lib.card.debug.title": "Debug Title",
   "hextech_lib.card.debug.description": "Debug Description",
   "command.hextech_lib.error.noplayer": "The command can only be executed by a player!",
