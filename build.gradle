@@ -159,6 +159,7 @@ modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = modrinth_id
     versionNumber = version
+    versionName = project.base.archivesName.get()
     versionType = "release"
     uploadFile = jar
     gameVersions = ["1.21.1"]
