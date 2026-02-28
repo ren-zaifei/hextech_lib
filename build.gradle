@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.110'
     id 'idea'
-    id 'org.jreleaser' version '1.21.0'
+    id 'org.jreleaser' version '1.22.0'
     id "com.modrinth.minotaur" version "2.+"
 }
 
@@ -171,8 +171,10 @@ modrinth {
 
 jreleaser {
     signing {
-        active = 'ALWAYS'
-        armored = true
+        pgp {
+            active = 'ALWAYS'
+            armored = true
+        }
     }
     deploy {
         maven {
@@ -183,6 +185,11 @@ jreleaser {
                     stagingRepository('build/staging-deploy')
                 }
             }
+        }
+    }
+    release {
+        github {
+            enabled = false
         }
     }
 }
