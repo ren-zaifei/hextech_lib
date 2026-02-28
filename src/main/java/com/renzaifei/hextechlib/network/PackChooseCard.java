@@ -6,7 +6,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.UUID;
 
 public class PackChooseCard implements CustomPacketPayload {
     //静态存储数据
