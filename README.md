@@ -10,17 +10,22 @@ Please do not choose any version below 1.0.2
 Just like in a roguelike game, upon completing a certain objective, you can choose one of three buffs to empower yourself.
 
 ## 关于指令 About Command
-
+- (op)
 - /hextech  
     - common
     - rare
     - epic
     - legendary
-    - list
 
 本模组内置四种奖池，代表了海克斯的稀有度与强度，但并未内置任何海克斯。
 
 This mod includes four built-in loot pools, which represent the rarity and power level of the Hextech enhancements, but it does not include any actual Hextech abilities itself.
+
+- /hextech
+    - list
+此命令可用户管理已选择海克斯，并选择放弃其中一个。
+
+This command allows users to manage their selected Hextech and choose to abandon one of them.
 
 ## 如何使用 How to use it
 
