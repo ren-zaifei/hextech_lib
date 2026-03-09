@@ -4,8 +4,6 @@ on:
     workflows: [ "Build" ]
     types:
       - completed
-    tags:
-      - 'v*'
 
 jobs:
   publish:
