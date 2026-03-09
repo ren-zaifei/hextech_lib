@@ -33,6 +33,7 @@ public class HexTriggers {
         PacketDistributor.sendToPlayer(player,new PackOpenChooseUI(1,ids));
     }
 
+
     public static void getControl(ServerPlayer player){
         List<ResourceLocation> ids = HCardAttachment.get(player);
         if (ids.isEmpty()){
