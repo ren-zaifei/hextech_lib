@@ -23,9 +23,6 @@ public class ServerPacketHandler {
         registrar.playToServer(PackChooseCard.TYPE,
                 PackChooseCard.STREAM_CODEC,
                 (ServerPacketHandler::handlePacket));
-        registrar.playToClient(PackOpenChooseUI.TYPE,
-                PackOpenChooseUI.STREAM_CODEC,
-                (payload, context) -> {});
     }
 
     public static void handlePacket(final PackChooseCard data, final IPayloadContext context) {
