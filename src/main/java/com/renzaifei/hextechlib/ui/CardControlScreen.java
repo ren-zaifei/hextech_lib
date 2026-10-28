@@ -19,6 +19,11 @@ public class CardControlScreen extends BaseScreen {
         super(Component.translatable("gui.hextech_lib.control.title"),cards);
     }
 
+    @Override
+    protected Component subtitle() {
+        return Component.translatable("gui.hextech_lib.control.subtitle");
+    }
+
     public void onCardClicked(int index, HCard card){
         this.selectedIndex = index;
         PacketDistributor.sendToServer(new PackChooseCard(2, card.getId()));
