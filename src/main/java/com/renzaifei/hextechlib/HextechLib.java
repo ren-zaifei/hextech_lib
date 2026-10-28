@@ -2,6 +2,7 @@ package com.renzaifei.hextechlib;
 
 import com.renzaifei.hextechlib.card.HCardAttachment;
 import com.renzaifei.hextechlib.card.HCardPool;
+import com.renzaifei.hextechlib.card.DebugCards;
 import com.renzaifei.hextechlib.command.HextechCommand;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -11,6 +12,7 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(HextechLib.MODID)
 public class HextechLib {
@@ -25,6 +27,9 @@ public class HextechLib {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+        if (!FMLEnvironment.production) {
+            event.enqueueWork(DebugCards::register);
+        }
         LOGGER.info("go go go 出发喽");
     }
 
